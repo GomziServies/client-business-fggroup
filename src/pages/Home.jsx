@@ -4,13 +4,8 @@ import { Helmet } from "react-helmet";
 import "../assets/css/style.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import HomeRecentActivity from "../components/HomeRecentActivity";
 import WhatsappBtn from "../components/WhatsappBtn";
 import WhatsappBtnMain from "../components/WhatsappBtnMain";
-import VideoReview from "../components/VideoReview";
-import ModalVideo from "react-modal-video";
-import { Link } from "react-router-dom";
-import ExploreGomzi from "../components/ExploreGomzi";
 import SuccessStoryImages from "../components/SuccessStoryImages";
 import GymMainActivity from "../components/GymMainActivity";
 

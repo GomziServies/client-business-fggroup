@@ -8809,7 +8809,7 @@ footer.skin-dark-footer ul.footer-bottom-social li a:focus {
 }
 @media all and (min-width: 993px) and (max-width: 1280px) {
   form.main-search-wrap.fl-wrap.half-column {
-    max-width: 536px;
+    max-width: 100%;
   }
 }
 @media (max-height: 600px) {

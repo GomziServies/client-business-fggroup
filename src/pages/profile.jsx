@@ -258,30 +258,6 @@ const Profile = () => {
               <div className="goodup-dashboard-nav sticky-top">
                 <div className="goodup-dashboard-inner">
                   <ul>
-                    <li>
-                      <Link to="/all-listing">
-                        <i className="lni lni-files me-2" />
-                        All Listings
-                      </Link>
-                    </li>
-                    {isLogin ? (
-                      <>
-                        <li>
-                          <Link to="/listing-list">
-                            <i className="lni lni-files me-2" />
-                            My Listings
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/add-listing">
-                            <i className="lni lni-add-files me-2" />
-                            Add Listing
-                          </Link>
-                        </li>
-                      </>
-                    ) : (
-                      ""
-                    )}
                     <li className="active">
                       <Link to="/profile">
                         <i className="lni lni-user me-2" />
