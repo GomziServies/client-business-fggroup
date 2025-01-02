@@ -142,8 +142,8 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to="/all-listing">
-                <p className="m-0">Listing</p>
+              <Link to="/all-gym-listing">
+                <p className="m-0">Gyms</p>
               </Link>
             </li>
             {isLogin ? (
@@ -168,19 +168,14 @@ function Header() {
             />
           </Link>
           <Link to="/">Home</Link>
-          <Link to="/listing-list">Listing</Link>
+          <Link to="/all-gym-listing">Gyms</Link>
           {isLogin ? <Link to="/profile">Profile</Link> : ""}
           <div className="d-flex justify-content-center mt-3">
             {isLogin ? (
-              <Link
-                to="/add-listing"
-                class="add-list-btn w-75 d-md-none d-block"
-              >
-                <i class="fas fa-plus me-2"></i>Add Listing
-              </Link>
+              ""
             ) : (
-              <Link to="/login" class="add-list-btn w-75 d-md-none d-block">
-                <i class="fas fa-plus me-2"></i>Add Listing
+              <Link to="/login">
+                Login
               </Link>
             )}
           </div>
@@ -204,17 +199,6 @@ function Header() {
                 </a>
               </li>
             )}
-            <li className="mx-0" style={{ cursor: "pointer" }}>
-              {isLogin ? (
-                <Link to="/add-listing" class="add-list-btn">
-                  <i class="fas fa-plus me-2"></i>Add Listing
-                </Link>
-              ) : (
-                <Link to="/login" class="add-list-btn">
-                  <i class="fas fa-plus me-2"></i>Add Listing
-                </Link>
-              )}
-            </li>
           </ul>
         </div>
       </div>
@@ -303,7 +287,7 @@ function Header() {
               <div className="col-5">
                 <Button
                   variant="primary"
-                  className="w-100 theme-bg text-light rounded ft-medium"
+                  className="w-100 bg-dark text-light rounded ft-medium"
                   onClick={handleGoBack}
                 >
                   Back

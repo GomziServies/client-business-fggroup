@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import WhatsappBtn from "../components/WhatsappBtn";
 import WhatsappBtnMain from "../components/WhatsappBtnMain";
 import GymMainActivity from "../components/GymMainActivity";
-import SimpleHeader from "../components/SimpleHeader";
+import Header from "../components/Header";
 import SuccessStoryImages from "../components/SuccessStoryImages";
 
 const GymListing = () => {
@@ -60,7 +60,7 @@ const GymListing = () => {
       <>
         {loading && <div className="preloader" />}
         <div id="main-wrapper">
-          <SimpleHeader />
+          <Header />
           <div className="clearfix" />
           <div
             className="home-banner margin-bottom-0"

@@ -11,9 +11,13 @@ import VideoReview from "../components/VideoReview";
 import ModalVideo from "react-modal-video";
 import { Link } from "react-router-dom";
 import ExploreGomzi from "../components/ExploreGomzi";
+import SuccessStoryImages from "../components/SuccessStoryImages";
+import GymMainActivity from "../components/GymMainActivity";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
+  const [searchData, setSearchData] = useState('');
+  const [inputData, setInputData] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
@@ -21,18 +25,20 @@ const Home = () => {
     }, 1000);
   }, []);
 
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("");
+  const handleSearchCity = (e) => {
+    e.preventDefault();
+    setSearchData(inputData);
 
-  const openVideoModal = (url) => {
-    setIsVideoOpen(true);
-    setVideoUrl(url);
+    const targetElement = document.getElementById("gymMainActivity");
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
-  const closeVideoModal = () => {
-    setIsVideoOpen(false);
-    setVideoUrl("");
-  };
+  const handleInputchange = (event) => {
+    const value = event.target.value
+    setInputData(value)
+  }
 
   return (
     <div>
@@ -40,9 +46,7 @@ const Home = () => {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>
-          Welcome to Our Platform - Explore Listings &amp; Grow Your Business
-        </title>
+        <title>Gym Listing</title>
         <meta
           name="description"
           content="Discover top business listings and services. Add your business, connect with customers, and explore opportunities to grow your brand on our platform!"
@@ -63,321 +67,293 @@ const Home = () => {
         <div id="main-wrapper">
           <Header />
           <div className="clearfix" />
-          <section
-            className="container-fluid p-0 text-start d-none d-md-block"
-            style={{ marginTop: "70px" }}
+          <div
+            className="home-banner margin-bottom-0"
+            style={{
+              background:
+                "#f41b3b url(images/gym-listing-banner.webp) no-repeat",
+              marginTop: "70px",
+            }}
+            data-overlay="5"
           >
-            <img
-              src="images/main-page-banner.webp"
-              className="img"
-              alt=""
-              width="100%"
-            />
-          </section>
-          <section
-            className="container-fluid p-0 text-start d-block d-md-none"
-            style={{ marginTop: "70px" }}
-          >
-            <img
-              src="images/main-page-banner-mobile.webp"
-              className="img"
-              alt=""
-              width="100%"
-            />
-          </section>
-          <ExploreGomzi />
-          <section className="space min">
             <div className="container">
               <div className="row justify-content-center">
-                <div className="col-12">
+                <div className="col-xl-11 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div className="banner_caption text-center">
+                    <h1 className="banner_title ft-bold mb-1">
+                      Find the Best Gyms and Fitness Centers Near You
+                    </h1>
+                    <p className="fs-lg ft-light">
+                      Looking for a top-rated gym, fitness center, or studio in
+                      your area? Discover the best places to stay fit, stay
+                      healthy, and reach your fitness goals.
+                    </p>
+                  </div>
+                  <form className="main-search-wrap fl-wrap half-column mt-5">
+                    <div className="main-search-item">
+                      <span className="search-tag">Find</span>
+                      <input
+                        type="text"
+                        className="form-control radius"
+                        placeholder="Gym Search By city...."
+                        onChange={handleInputchange}
+                      />
+                    </div>
+                    <div className="main-search-button">
+                      <button
+                        className="btn full-width theme-bg text-white"
+                        onClick={handleSearchCity}
+                      >
+                        Search<i className="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <SuccessStoryImages />
+          <section className="gray py-5" id="gymMainActivity">
+            <div className="container">
+              <div className="row">
+                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                  <div className="row justify-content-center mt-5 g-2">
+                    <div className="text-start col-12">
+                      <div className="d-block grouping-listings">
+                        <GymMainActivity searchData={searchData} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className="mt-5">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-xl-5 col-lg-7 col-md-9 col-sm-12">
                   <div className="sec_title position-relative text-center mb-5">
-                    <h6 className="theme-cl mb-0">Our Auditing on</h6>
-                    <h2 className="ft-bold">Gym Classification</h2>
+                    <h6 className="text-muted mb-0">
+                      Why Choose GOMZI Fitness Centers?
+                    </h6>
+                    <h2 className="ft-bold">
+                      We partner with <span className="theme-cl">3,000+</span>{" "}
+                      Trusted Gyms and Fitness Studios
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              <div className="row justify-content-center">
+                <div className="col-lg-3 col-md-3 col-sm-4 col-6">
+                  <div className="empl-thumb text-center px-3 py-4">
+                    <img
+                      src="images/l-1.webp"
+                      className="img-fluid mx-auto"
+                      alt="fg group"
+                      width="55%"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-4 col-6">
+                  <div className="empl-thumb text-center px-3 py-4">
+                    <img
+                      src="images/l-2.webp"
+                      className="img-fluid mx-auto"
+                      alt="fg group"
+                      width="55%"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-4 col-6">
+                  <div className="empl-thumb text-center px-3 py-4">
+                    <img
+                      src="images/l-3.webp"
+                      className="img-fluid mx-auto"
+                      alt="fg group"
+                      width="55%"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-4 col-6">
+                  <div className="empl-thumb text-center px-3 py-4">
+                    <img
+                      src="images/l-4.webp"
+                      className="img-fluid mx-auto"
+                      alt="fg group"
+                      width="55%"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-4 col-6">
+                  <div className="empl-thumb text-center px-3 py-4">
+                    <img
+                      src="images/l-5.webp"
+                      className="img-fluid mx-auto"
+                      alt="fg group"
+                      width="55%"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-4 col-6">
+                  <div className="empl-thumb text-center px-3 py-4">
+                    <img
+                      src="images/l-6.webp"
+                      className="img-fluid mx-auto"
+                      alt="fg group"
+                      width="55%"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-4 col-6">
+                  <div className="empl-thumb text-center px-3 py-4">
+                    <img
+                      src="images/l-7.webp"
+                      className="img-fluid mx-auto"
+                      alt="fg group"
+                      width="55%"
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-4 col-6">
+                  <div className="empl-thumb text-center px-3 py-4">
+                    <img
+                      src="images/l-8.webp"
+                      className="img-fluid mx-auto"
+                      alt="fg group"
+                      width="55%"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section
+            className="bg-cover text-center py-5 mt-5"
+            style={{ background: "#353535 url(images/bg.webp)" }}
+            data-overlay="7"
+          >
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-lg-7 col-md-10 text-center">
+                  <div className="sec-heading center">
+                    <h2 className="text-light ft-bold">
+                      Start Your Fitness Journey with GOMZI Today
+                    </h2>
+                    <h3 className="text-light ft-medium my-4">
+                      Find the best gyms and fitness centers, book a visit, and
+                      start achieving your fitness goals.
+                    </h3>
                   </div>
                 </div>
               </div>
               <div className="row">
-                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                  <div className="Goodup-price-wrap">
-                    <div className="Goodup-author-header">
-                      <div className="Goodup-price-currency">
-                        <h3 className="text-center mb-3">
-                          <span className="Goodup-new-price">
-                            <del className="w-100 text-center">Affordable</del>
-                          </span>
-                        </h3>
-                      </div>
-                      <div className="Goodup-price-subtitle theme-cl">
-                        Rs. 30,000/- annually
-                      </div>
-                    </div>
-                    <div className="Goodup-price-body">
-                      <ul className="price__features">
-                        <li>
-                          <i className="fa fa-angle-right"></i>1,000 to 3,000
-                          sq. ft. area
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Basic fitness
-                          equipment, functional training
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Certified
-                          trainers on request
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Ideal for
-                          beginners and casual fitness enthusiasts
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="Goodup-price-bottom">
-                      <a className="Goodup-price-btn" href="/affordable-list">
-                        <i className="fa-regular fa-eye"></i>View More
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                  <div className="Goodup-price-wrap">
-                    <div className="Goodup-author-header">
-                      <div className="Goodup-price-currency">
-                        <h3 className="text-center mb-3">
-                          <span className="Goodup-new-price">
-                            <del className="w-100 text-center">Standard</del>
-                          </span>
-                        </h3>
-                      </div>
-                      <div className="Goodup-price-subtitle theme-cl">
-                        Rs. 45,000/- annually
-                      </div>
-                    </div>
-                    <div className="Goodup-price-body">
-                      <ul className="price__features">
-                        <li>
-                          <i className="fa fa-angle-right"></i>3,000 to 8,000
-                          sq. ft. area
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Comprehensive gym
-                          facilities, advanced equipment
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Certified
-                          trainers included
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Wide variety of
-                          group fitness classes
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Locker and shower
-                          facilities, flexible plans
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="Goodup-price-bottom">
-                      <a className="Goodup-price-btn" href="/standard-list">
-                        <i className="fa-regular fa-eye"></i>View More
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                  <div className="Goodup-price-wrap">
-                    <div className="Goodup-author-header">
-                      <div className="Goodup-price-currency">
-                        <h3 className="text-center mb-3">
-                          <span className="Goodup-new-price">
-                            <del className="w-100 text-center">Premium</del>
-                          </span>
-                        </h3>
-                      </div>
-                      <div className="Goodup-price-subtitle theme-cl">
-                        Rs. 90,000/- annually
-                      </div>
-                    </div>
-                    <div className="Goodup-price-body">
-                      <ul className="price__features">
-                        <li>
-                          <i className="fa fa-angle-right"></i>10,000 to 100,000
-                          sq. ft. area
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>State-of-the-art
-                          equipment and luxury amenities
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Personal training
-                          sessions included
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Exclusive classes
-                          and workshops
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Spa, sauna,
-                          wellness zones, concierge-level service
-                        </li>
-                        <li>
-                          <i className="fa fa-angle-right"></i>Tailored diet and
-                          fitness programs
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="Goodup-price-bottom">
-                      <a className="Goodup-price-btn" href="/premium-list">
-                        <i className="fa-regular fa-eye"></i>View More
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <HomeRecentActivity />
-          <section className="bg-light-theme text-start pb-5">
-            <div className="container">
-              <div className="row align-items-center justify-content-between text-left g-4">
-                <div className="col-lg-6">
-                  <div className="capsTextwrap">
-                    <h2 className="mb-3">Gomzi kyun join karein?</h2>
-                    <div className="featuresGroups">
-                      <div className="singleFeatured">
-                        <div className="ico">
-                          <i className="fa-solid fa-circle-check" />
-                        </div>
-                        <div className="caps">
-                          <h4>Headline Options</h4>
-                          <p>Gomzi: Aapka Fitness Partner!</p>
-                          <p>
-                            Hazaron Logon Ka Bharosa, Ab Aapki Fitness Journey
-                            Ke Liye.
-                          </p>
-                        </div>
-                      </div>
-                      <div className="singleFeatured">
-                        <div className="ico">
-                          <i className="fa-solid fa-circle-check" />
-                        </div>
-                        <div className="caps">
-                          <h4>Core Features</h4>
-                          <p>
-                            Nationwide Gym Network: Pure India ke top gyms ka
-                            access.
-                          </p>
-                          <p>
-                            Strict Quality Checks: Har gym ka quality assurance
-                            ke saath selection.
-                          </p>
-                          <p>
-                            Smart Gym Matching: AI tools se aapke goals aur
-                            location ke hisaab se best gym suggestion.
-                          </p>
-                          <p>
-                            Clear Pricing: Transparent aur affordable membership
-                            plans.
-                          </p>
-                          <p>
-                            24/7 Support: Koi bhi query ho, hum hamesha
-                            available hain.
-                          </p>
-                        </div>
-                      </div>
-                      <div className="singleFeatured">
-                        <div className="ico">
-                          <i className="fa-solid fa-circle-check" />
-                        </div>
-                        <div className="caps">
-                          <h4>Additional Features to Highlight</h4>
-                          <p>
-                            Customized Fitness Plans: Expert-designed fitness
-                            roadmaps ke saath shuruaat karein.
-                          </p>
-                          <p>
-                            Special Discounts: Gym memberships par exclusive
-                            offers aur deals.
-                          </p>
-                          <p>
-                            Easy Payment Options: EMI plans ke saath easy aur
-                            hassle-free payments.
-                          </p>
-                          <p>
-                            Latest Updates: Nai gyms, features aur fitness
-                            trends ke baare mein regular updates.
-                          </p>
-                          <p>
-                            Wellness Beyond Fitness: Sirf fitness hi nahi,
-                            nutrition aur mental health par bhi focus.
-                          </p>
-                          <p>
-                            Advanced Technology: Virtual tours, online bookings
-                            aur app integration for convenience.
-                          </p>
-                          <p>
-                            Fitness Community: Fitness groups aur events ke
-                            saath motivated rahiye.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6">
-                  <div className="imgBox">
-                    <img
-                      src="images/custom-img.png"
-                      className="img-fluid"
-                      alt="Image"
+                <div className="col-lg-12 col-md-12 col-sm-12">
+                  <div className="counter-link my-5">
+                    <WhatsappBtn
+                      message={
+                        "Hello, I wanted to know more about Business Listing."
+                      }
+                      options={{ pageRef: true }}
                     />
                   </div>
                 </div>
               </div>
             </div>
           </section>
-          <section className="space text-start">
+          <section className="my-5">
             <div className="container">
-              <div className="row align-items-center justify-content-between text-left g-4">
-                <div className="col-lg-6  position-relative">
-                  <div className="imgBox border-r-10">
-                    <img
-                      src="images/commission-charges.webp"
-                      className="img-fluid"
-                      alt="Image"
-                    />
-                  </div>
-                  <div className="how-video-btn how-play-btn">
-                    <a
-                      onClick={() => openVideoModal("cF59Y0giN5E")}
-                      data-flashy-type="video"
-                      className="custom clickof"
-                      aria-label="Fg Group"
-                    >
-                      <span className="how-newthing">
-                        <i className="fas fa-play"></i>
-                      </span>
-                    </a>
+              <div className="row">
+                <div className="col-xl-12 col-lg-12 col-md-12 col-12">
+                  <div className="sec_title position-relative text-center mb-5">
+                    <h6 className="text-muted mb-0">Ask Questions</h6>
+                    <h2 className="ft-bold">Frequently Asked Questions</h2>
                   </div>
                 </div>
-                <div className="col-lg-6">
-                  <div className="capsTextwrap">
-                    <h2 className="mb-3 fw-md-bolder fw-bold listing-title">
-                      Apna business list kaise karein
-                    </h2>
-                    <div className="featuresGroups">
-                      <div className="singleFeatured">
-                        <div className="ico">
-                          <i className="fa-solid fa-circle-arrow-right"></i>
+              </div>
+              <div className="row justify-content-center text-start">
+                <div className="col-xl-10 col-lg-11 col-md-12 col-12">
+                  <div id="accordion2" className="accordion">
+                    <div className="card">
+                      <div className="card-header" id="h7">
+                        <h5 className="mb-0 text-start">
+                          <button
+                            className="btn btn-link"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#ord7"
+                            aria-expanded="true"
+                            aria-controls="ord7"
+                          >
+                            How can I find the best gym near me?
+                          </button>
+                        </h5>
+                      </div>
+
+                      <div
+                        id="ord7"
+                        className="collapse show"
+                        aria-labelledby="h7"
+                        data-parent="#accordion2"
+                      >
+                        <div className="card-body">
+                          You can easily search our platform by location,
+                          rating, and available facilities to find the best gym
+                          near you.
                         </div>
-                        <div className="caps">
-                          <h4 className="fw-md-bolder fw-bold">
-                            Join us. Hum ensure karenge poora support taki apka
-                            business badhta rahe.
-                          </h4>
-                          {/* <p>
-                            - Nationwide Gym Network: Partnered with leading
-                            gyms across India to bring you the best options.
-                          </p> */}
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div className="card-header" id="h8">
+                        <h5 className="mb-0 text-start">
+                          <button
+                            className="btn btn-link collapsed"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#ord8"
+                            aria-expanded="false"
+                            aria-controls="ord8"
+                          >
+                            What facilities are typically available at
+                            GOMZI-listed gyms?
+                          </button>
+                        </h5>
+                      </div>
+                      <div
+                        id="ord8"
+                        className="collapse"
+                        aria-labelledby="h8"
+                        data-parent="#accordion2"
+                      >
+                        <div className="card-body">
+                          Most gyms on GOMZI provide essential fitness amenities
+                          such as WiFi, air conditioning, steam baths, lockers,
+                          and more. Check the specific gym details for more
+                          information.
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div className="card-header" id="h9">
+                        <h5 className="mb-0 text-start">
+                          <button
+                            className="btn btn-link collapsed"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#ord9"
+                            aria-expanded="false"
+                            aria-controls="ord9"
+                          >
+                            How do I contact a gym or book a membership?
+                          </button>
+                        </h5>
+                      </div>
+                      <div
+                        id="ord9"
+                        className="collapse"
+                        aria-labelledby="h9"
+                        data-parent="#accordion2"
+                      >
+                        <div className="card-body">
+                          Each gym listing provides contact details, including
+                          phone numbers, email, and WhatsApp links for easy
+                          communication.
                         </div>
                       </div>
                     </div>
@@ -386,469 +362,70 @@ const Home = () => {
               </div>
             </div>
           </section>
-          <section className="space pb-mb-5 pb-4 gray">
+          <section className="py-5 gray">
             <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                  <div className="sec_title position-relative text-center mb-5">
-                    <h6 className="mb-0 theme-cl">Popular Features</h6>
-                    <h2 className="ft-bold">Our Features</h2>
-                  </div>
-                </div>
-              </div>
-              <div className="row align-items-center">
-                <div className="col-md-4 col-6">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/viral-marketing.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
+              <div className="row align-items-center justify-content-between">
+                <div className="col-lg-6 col-md-12 col-sm-12 content-column">
+                  <div className="content_block_2 pr-3 py-4">
+                    <div className="content-box">
+                      <div className="sec-title light text-start">
+                        <p className="theme-cl px-3 py-1 rounded bg-light-danger d-inline-flex">
+                          Download apps
+                        </p>
+                        <h2 className="ft-bold">
+                          Download the GOMZI App for Easy Access
+                        </h2>
                       </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Verified Gym Listings
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/group.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
-                      </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Fitness Classes Finder
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/trainer.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
-                      </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Trainer Matching Service
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/membership-card.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
-                      </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Flexible Membership
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/virtual-reality-fitness.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
-                      </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Virtual Gym Tours
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/rating.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
-                      </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Client Testimonials
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/nutrition.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
-                      </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Integrated Nutrition Plans
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/international-childrens-day.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
-                      </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Community Support
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6 d-md-block d-none">
-                  <div className="cats-wrap text-center">
-                    <div className="Goodup-catg-wrap">
-                      <div className="Goodup-catg-icon">
-                        <img
-                          src="images/building.png"
-                          className="img"
-                          alt="Img Slide"
-                        />
-                      </div>
-                      <div className="Goodup-catg-caption">
-                        <h4 className="fs-md mb-0 ft-medium m-catrio">
-                          Personalized Gym Recommendations
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <ModalVideo
-            channel="youtube"
-            isOpen={isVideoOpen}
-            videoId={videoUrl}
-            onClose={closeVideoModal}
-          />
-          <VideoReview openVideoModal={openVideoModal} />
-          <section className="middle text-start">
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                  <div className="sec_title position-relative text-center mb-5">
-                    <h6 className="theme-cl mb-0">Latest Updates</h6>
-                    <h2 className="ft-bold">View Recent Updates</h2>
-                  </div>
-                </div>
-              </div>
-              <div className="row justify-content-center">
-                <div className="col-lg-6 text-left">
-                  <div className="gup_blg_grid_box">
-                    <div className="gup_blg_grid_thumb">
-                      <Link to="/revolutionizing-gyms">
-                        <img
-                          src="images/revolutionizing-gyms.webp"
-                          className="img-fluid"
-                          alt=""
-                        />
-                      </Link>
-                    </div>
-                    <div className="gup_blg_grid_caption">
-                      {/* <div className="blg_tag">
-                        <span>Nutrition</span>
-                      </div> */}
-                      <div className="blg_title">
-                        <h4>
-                          <Link to="/revolutionizing-gyms">
-                            The Future of Fitness: How Technology is
-                            Revolutionizing Gyms
-                          </Link>
-                        </h4>
-                      </div>
-                      <div className="blg_desc">
+                      <div className="text mb-3 text-start">
                         <p>
-                          The fitness industry is undergoing a seismic shift
-                          thanks to rapid advancements in...
+                          Get the GOMZI app to discover gyms, fitness centers,
+                          and exclusive offers with just a tap. Explore gyms in
+                          your area, compare facilities, and connect directly
+                          from your phone.
                         </p>
                       </div>
-                    </div>
-                    <div className="crs_grid_foot">
-                      <div className="crs_flex d-flex align-items-center justify-content-between br-top px-3 py-2">
-                        <div className="crs_fl_first">
-                          <div className="crs_tutor">
-                            <div className="crs_tutor_thumb">
-                              <a href="javascript:void(0);">
-                                <img
-                                  src="images/team-2.jpg"
-                                  className="img-fluid circle"
-                                  width="35"
-                                  alt=""
-                                />
-                              </a>
-                            </div>
-                          </div>
+                      <div className="position-relative text-start row">
+                        <div className="col-lg-4 col-md-4 col-4">
+                          <h3 className="ft-bold theme-cl mb-0">
+                            <span className="count">3</span>k+
+                          </h3>
+                          <p className="ft-medium">Active Gyms</p>
                         </div>
-                        <div className="crs_fl_last">
-                          <div className="foot_list_info">
-                            <ul>
-                              <li>
-                                <div className="elsio_ic">
-                                  <i className="fa fa-eye text-success"></i>
-                                </div>
-                                <div className="elsio_tx">20k Views</div>
-                              </li>
-                              <li>
-                                <div className="elsio_ic">
-                                  <i className="fa fa-clock text-warning"></i>
-                                </div>
-                                <div className="elsio_tx">March 11, 2019</div>
-                              </li>
-                            </ul>
-                          </div>
+                        <div className="col-lg-4 col-md-4 col-4">
+                          <h3 className="ft-bold theme-cl mb-0">
+                            <span className="count">7</span>k+
+                          </h3>
+                          <p className="ft-medium">Fitness Plans</p>
                         </div>
+                        <div className="col-lg-4 col-md-4 col-4">
+                          <h3 className="ft-bold theme-cl mb-0">
+                            <span className="count">10</span>k+
+                          </h3>
+                          <p className="ft-medium">Trainers</p>
+                        </div>
+                      </div>
+                      <div className="btn-box clearfix text-start mt-5">
+                        <a
+                          href="https://apps.apple.com/in/app/fg/id1661113769"
+                          className="download-btn play-store mx-1 d-inline-flex"
+                        >
+                          <img src="images/ios.webp" width="200" alt="" />
+                        </a>
+                        <a
+                          href="https://play.google.com/store/apps/details?id=com.fwg_app&pli=1"
+                          className="download-btn play-store mx-1 mb-1 d-inline-flex"
+                        >
+                          <img src="images/and.webp" width="200" alt="" />
+                        </a>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6 text-left">
-                  <div className="gup_blg_grid_box">
-                    <div className="gup_blg_grid_thumb">
-                      <Link to="/strategies-for-modern-gyms">
-                        <img
-                          src="images/modern-gyms.webp"
-                          className="img-fluid"
-                          alt=""
-                        />
-                      </Link>
-                    </div>
-                    <div className="gup_blg_grid_caption">
-                      {/* <div className="blg_tag">
-                        <span>Fitness</span>
-                      </div> */}
-                      <div className="blg_title">
-                        <h4>
-                          <Link to="/strategies-for-modern-gyms">
-                            Top Revenue-Boosting Strategies for Modern Gyms
-                          </Link>
-                        </h4>
-                      </div>
-                      <div className="blg_desc">
-                        <p>
-                          In an industry as dynamic and competitive as fitness,
-                          increasing revenue is crucial...
-                        </p>
-                      </div>
-                    </div>
-                    <div className="crs_grid_foot">
-                      <div className="crs_flex d-flex align-items-center justify-content-between br-top px-3 py-2">
-                        <div className="crs_fl_first">
-                          <div className="crs_tutor">
-                            <div className="crs_tutor_thumb">
-                              <a href="javascript:void(0);">
-                                <img
-                                  src="images/team-3.jpg"
-                                  className="img-fluid circle"
-                                  width="35"
-                                  alt=""
-                                />
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="crs_fl_last">
-                          <div className="foot_list_info">
-                            <ul>
-                              <li>
-                                <div className="elsio_ic">
-                                  <i className="fa fa-eye text-success"></i>
-                                </div>
-                                <div className="elsio_tx">15k Views</div>
-                              </li>
-                              <li>
-                                <div className="elsio_ic">
-                                  <i className="fa fa-clock text-warning"></i>
-                                </div>
-                                <div className="elsio_tx">March 15, 2019</div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 text-left">
-                  <div className="gup_blg_grid_box">
-                    <div className="gup_blg_grid_thumb">
-                      <Link to="/scalable-gym">
-                        <img
-                          src="images/scalable-gym.webp"
-                          className="img-fluid"
-                          alt=""
-                        />
-                      </Link>
-                    </div>
-                    <div className="gup_blg_grid_caption">
-                      {/* <div className="blg_tag">
-                        <span>Health</span>
-                      </div> */}
-                      <div className="blg_title">
-                        <h4>
-                          <Link to="/scalable-gym">
-                            From Local to Global: Building a Scalable Gym
-                            Business Model
-                          </Link>
-                        </h4>
-                      </div>
-                      <div className="blg_desc">
-                        <p>
-                          Transitioning a gym from a local establishment to a
-                          thriving national or...
-                        </p>
-                      </div>
-                    </div>
-                    <div className="crs_grid_foot">
-                      <div className="crs_flex d-flex align-items-center justify-content-between br-top px-3 py-2">
-                        <div className="crs_fl_first">
-                          <div className="crs_tutor">
-                            <div className="crs_tutor_thumb">
-                              <a href="javascript:void(0);">
-                                <img
-                                  src="images/team-5.jpg"
-                                  className="img-fluid circle"
-                                  width="35"
-                                  alt=""
-                                />
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="crs_fl_last">
-                          <div className="foot_list_info">
-                            <ul>
-                              <li>
-                                <div className="elsio_ic">
-                                  <i className="fa fa-eye text-success"></i>
-                                </div>
-                                <div className="elsio_tx">12k Views</div>
-                              </li>
-                              <li>
-                                <div className="elsio_ic">
-                                  <i className="fa fa-clock text-warning"></i>
-                                </div>
-                                <div className="elsio_tx">March 23, 2019</div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 text-left">
-                  <div className="gup_blg_grid_box">
-                    <div className="gup_blg_grid_thumb">
-                      <Link to="/member-engagement">
-                        <img
-                          src="images/member-engagement-blog.webp"
-                          className="img-fluid"
-                          alt=""
-                        />
-                      </Link>
-                    </div>
-                    <div className="gup_blg_grid_caption">
-                      {/* <div className="blg_tag">
-                        <span>Wellness</span>
-                      </div> */}
-                      <div className="blg_title">
-                        <h4>
-                          <Link to="/member-engagement">
-                            The Power of Community: How Gyms Can Thrive with
-                            Member Engagement
-                          </Link>
-                        </h4>
-                      </div>
-                      <div className="blg_desc">
-                        <p>
-                          Transitioning a gym from a local establishment to a
-                          thriving national or global...
-                        </p>
-                      </div>
-                    </div>
-                    <div className="crs_grid_foot">
-                      <div className="crs_flex d-flex align-items-center justify-content-between br-top px-3 py-2">
-                        <div className="crs_fl_first">
-                          <div className="crs_tutor">
-                            <div className="crs_tutor_thumb">
-                              <a href="javascript:void(0);">
-                                <img
-                                  src="images/team-2.jpg"
-                                  className="img-fluid circle"
-                                  width="35"
-                                  alt=""
-                                />
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="crs_fl_last">
-                          <div className="foot_list_info">
-                            <ul>
-                              <li>
-                                <div className="elsio_ic">
-                                  <i className="fa fa-eye text-success"></i>
-                                </div>
-                                <div className="elsio_tx">10k Views</div>
-                              </li>
-                              <li>
-                                <div className="elsio_ic">
-                                  <i className="fa fa-clock text-warning"></i>
-                                </div>
-                                <div className="elsio_tx">March 26, 2019</div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                <div className="col-lg-5 col-md-12 col-sm-12 image-column">
+                  <div className="image-box">
+                    <figure className="image">
+                      <img src="images/app.webp" className="img-fluid" alt="" />
+                    </figure>
                   </div>
                 </div>
               </div>

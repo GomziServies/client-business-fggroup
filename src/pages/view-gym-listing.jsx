@@ -4,7 +4,7 @@ import "../assets/css/style.css";
 import WhatsappBtnMain from "../components/WhatsappBtnMain";
 import Slider from "react-slick";
 import Footer from "../components/Footer";
-import SimpleHeader from "../components/SimpleHeader";
+import Header from "../components/Header";
 import { businessListingAxiosInstance } from "../js/api";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -169,7 +169,7 @@ const ViewGymListing = () => {
         options={{ pageRef: true }}
       />
       <>
-        <SimpleHeader />
+        <Header />
         <section
           className="view-gym-listing text-start"
           style={{ marginTop: "70px" }}

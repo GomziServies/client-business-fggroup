@@ -5,7 +5,7 @@ import "../assets/css/style.css";
 import Footer from "../components/Footer";
 import WhatsappBtnMain from "../components/WhatsappBtnMain";
 import { Link } from "react-router-dom";
-import SimpleHeader from "../components/SimpleHeader";
+import Header from "../components/Header";
 import { businessListingAxiosInstance } from "../js/api";
 import Dummy_img from "../assets/dummy-image-square.jpg";
 import User_img from "../assets/user-profile.png";
@@ -91,7 +91,7 @@ const AllGymListing = () => {
       <>
         {loading && <div className="preloader" />}
         <div id="main-wrapper">
-          <SimpleHeader />
+          <Header />
           <div className="clearfix" />
           <section className="container-fluid p-0 text-start d-none d-md-block section-margin">
             <img
