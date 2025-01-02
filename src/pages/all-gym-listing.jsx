@@ -119,7 +119,7 @@ const AllGymListing = () => {
                   </div>
                 </div>
               </div>
-              <div class="row align-items-center">
+              <div class="row justify-content-center align-items-center">
                 <div className="row justify-content-center text-start">
                   {businessData.map((business) => {
                     const description = business?.description;
