@@ -278,15 +278,7 @@ const ViewGymListing = () => {
                             <p className="vrt-qgunke">
                               Great service and great food. We asked for a
                               romantic table and they put us in a corner section
-                              at a candle lit table…
-                              <span className="ft-bold">
-                                <a
-                                  href="javascript:void(0);"
-                                  className="d14ixh"
-                                >
-                                  more
-                                </a>
-                              </span>
+                              at a candle lit table
                             </p>
                           </div>
                         </div>
