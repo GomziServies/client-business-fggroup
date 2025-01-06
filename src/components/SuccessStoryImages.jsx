@@ -40,11 +40,11 @@ const SuccessStoryImages = () => {
     };
     return (
         <>
-            <section className="middle text-start my-5">
+            <section className="text-start my-5">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                            <div className="sec_title position-relative text-center mb-5">
+                            <div className="sec_title position-relative text-center mb-3">
                                 <h2 className="ft-bold">Gomzi ki Success Stories!</h2>
                             </div>
                         </div>

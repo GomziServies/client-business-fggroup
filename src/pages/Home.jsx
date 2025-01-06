@@ -108,11 +108,11 @@ const Home = () => {
             </div>
           </div>
           <SuccessStoryImages />
-          <section className="gray py-5" id="gymMainActivity">
+          <section className="gray" id="gymMainActivity">
             <div className="container">
               <div className="row">
                 <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                  <div className="row justify-content-center mt-5 g-2">
+                  <div className="row justify-content-center g-2">
                     <div className="text-start col-12">
                       <div className="d-block grouping-listings">
                         <GymMainActivity searchData={searchData} />
@@ -230,7 +230,7 @@ const Home = () => {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-lg-7 col-md-10 text-center">
-                  <div className="sec-heading center">
+                  <div className="sec-heading center mt-5">
                     <h2 className="text-light ft-bold">
                       Start Your Fitness Journey with GOMZI Today
                     </h2>
