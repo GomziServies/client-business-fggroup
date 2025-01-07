@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import validator from "validator";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const ViewGymListing = () => {
   const location = useLocation();
@@ -92,6 +94,50 @@ const ViewGymListing = () => {
   const openLightbox = (index) => {
     // setSelectedImage(index);
     // setLightboxOpen(true);
+  };
+
+  const handleSubmitReview = async () => {
+    try {
+      const authData = localStorage.getItem("authorization");
+      if (!authData) {
+        const confirmResult = await Swal.fire({
+          icon: "info",
+          title:
+            "You need to log in first! click on login Button you see on top Right Side",
+          text: "Login to submit a review.",
+          showCancelButton: true,
+        });
+        return;
+      }
+
+      if (!review || rating === 0) {
+        toast.error("Please provide both review and rating.");
+        return;
+      }
+
+      const requestData = {
+        business_listing_id: business_id,
+        comment: review,
+        rating,
+      };
+
+      const response = await businessListingAxiosInstance.post(
+        "/create-review",
+        requestData
+      );
+      fetchBusinessData();
+      fetchReviewsData();
+      toast.success("Review submitted successfully");
+      setReview("");
+      setRating(0);
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      toast.error("Error submitting review. Please try again.");
+    }
+  };
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
   };
 
   const fetchReviewsData = async () => {
@@ -252,7 +298,7 @@ const ViewGymListing = () => {
                                   businessData.review_stats.average_rating.toFixed(
                                     1
                                   )) ||
-                                  "0"}{" "} Reviews
+                                  "0"}{" "}
                               </span>
                             </div>
                           </div>
@@ -551,6 +597,58 @@ const ViewGymListing = () => {
                         {userReviewsData?.length === 0 && (
                           <h5>No Review Found</h5>
                         )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white rounded mb-4">
+                  <div className="jbd-01 px-4 py-4">
+                    <div className="jbd-details">
+                      <h5 className="ft-bold fs-lg">Drop Your Review</h5>
+                      <div className="review-form-box form-submit mt-3">
+                        <div className="row">
+                          <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="form-group mb-3">
+                              <textarea
+                                className="form-control rounded ht-140"
+                                placeholder="Review"
+                                defaultValue={""}
+                                value={review}
+                                onChange={(e) => setReview(e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="form-group mb-3">
+                              <label className="ft-medium small mb-1">
+                                Select Rating
+                              </label>
+                              <div className="d-flex mb-2">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <StarIcon
+                                    key={star}
+                                    sx={{
+                                      fontSize: "25px",
+                                      color:
+                                        rating >= star ? "#FFAE11" : "#000",
+                                    }}
+                                    onClick={() => handleRatingChange(star)}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="form-group">
+                              <button
+                                onClick={handleSubmitReview}
+                                className="btn theme-bg text-light rounded"
+                              >
+                                Submit Review
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
