@@ -7501,6 +7501,7 @@ button.aps-clone {
   background: #fc7e00;
   width: 100%;
   text-align: center;
+  cursor: pointer;
 }
 .Uploadphoto input.upload {
   position: absolute;

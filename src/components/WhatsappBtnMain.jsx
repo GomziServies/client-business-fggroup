@@ -8,9 +8,8 @@ function sendToWhatsApp(text, option) {
 
   if (option) {
     if (option.pageRef) {
-      text += `\n\nI found your contact details from ${
-        window.location.origin + window.location.pathname
-      }`;
+      text += `\n\nI found your contact details from ${window.location.origin + window.location.pathname
+        }`;
     }
   }
 
@@ -27,12 +26,9 @@ function WhatsappBtnMain({ message, options }) {
 
   return (
     <div>
-    <a onClick={handleClick} className="inquiry-css" aria-label="Fg Group">
-      <i className="fab fa-whatsapp"></i>
-    </a>
-    <Link to="/add-listing" className="add-inquiry-css" aria-label="Fg Group">
-      <i className="fab fa-plus"></i>
-    </Link>
+      <a onClick={handleClick} className="inquiry-css" aria-label="Fg Group">
+        <i className="fab fa-whatsapp"></i>
+      </a>
     </div>
   );
 }

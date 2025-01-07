@@ -12,6 +12,8 @@ import StarIcon from "@mui/icons-material/Star";
 import validator from "validator";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import User_img from "../assets/user-profile.png";
+
 
 const ViewGymListing = () => {
   const location = useLocation();
@@ -547,6 +549,9 @@ const ViewGymListing = () => {
                               <img
                                 src={`https://files.fggroup.in/${review.createdBy_user.profile_image}`}
                                 className="img-fluid"
+                                onError={(e) => {
+                                  e.target.src = User_img;
+                                }}
                                 alt=""
                               />
                             </div>
