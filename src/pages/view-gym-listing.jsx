@@ -387,9 +387,7 @@ const ViewGymListing = () => {
                           )}
                           <div className="vrt-list-desc">
                             <p className="vrt-qgunke">
-                              Great service and great food. We asked for a
-                              romantic table and they put us in a corner section
-                              at a candle lit table
+                              Listed by GOMZI: These gyms, fitness centers, and studios are handpicked to help you achieve your fitness goals. Explore their unique facilities, expert trainers, and personalized programs to find the perfect fit for your journey.
                             </p>
                           </div>
                         </div>
@@ -610,7 +608,7 @@ const ViewGymListing = () => {
                                     <td>
                                       {day.timings.length > 0
                                         ? day.timings[0].from_time !==
-                                            "00:00" &&
+                                          "00:00" &&
                                           day.timings[0].to_time !== "00:00"
                                           ? `${day.timings[0].from_time} - ${day.timings[0].to_time}`
                                           : "Closed"
