@@ -452,7 +452,8 @@ const ViewGymListing = () => {
                                           contact.contact_type === "website" &&
                                           isValidWebsite(contact.value) && (
                                             <a
-                                              href={locationData.direction_link}
+                                              href={contact.value}
+                                              target="_blank"
                                               className="text-dark"
                                               style={{ fontSize: "16px" }}
                                             >
@@ -845,7 +846,8 @@ const ViewGymListing = () => {
                                     contact.contact_type === "website" &&
                                     isValidWebsite(contact.value) && (
                                       <a
-                                        href={locationData.direction_link}
+                                        href={contact.value}
+                                        target="_blank"
                                         className="text-dark"
                                         style={{ fontSize: "16px" }}
                                       >
