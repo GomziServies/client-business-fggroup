@@ -5,7 +5,7 @@ import WhatsappBtnMain from "../components/WhatsappBtnMain";
 import Slider from "react-slick";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { businessListingAxiosInstance } from "../js/api";
+import axiosInstance, { businessListingAxiosInstance } from "../js/api";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
@@ -13,7 +13,7 @@ import validator from "validator";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import User_img from "../assets/user-profile.png";
-
+import { Modal, Button, Form } from "react-bootstrap";
 
 const ViewGymListing = () => {
   const location = useLocation();
@@ -41,6 +41,73 @@ const ViewGymListing = () => {
     "/images/revolutionizing-gyms-3.webp",
     "/images/revolutionizing-gyms-4.webp",
   ];
+
+  const [showModal, setShowModal] = useState(false);
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [otpDialogOpen, setOtpDialogOpen] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [currentStep, setCurrentStep] = useState("login");
+
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
+  const handleLoginSubmit = async () => {
+    try {
+      const response = await axiosInstance.post("/account/authorization", {
+        mobile: mobileNumber,
+      });
+
+      if (response.data && response.data.data && response.data.data.OTP) {
+        setOtpDialogOpen(true);
+        setCurrentStep("otp");
+        setOtpCode(response.data.data.OTP);
+
+        toast.success("OTP Sent! You will receive an OTP shortly.");
+      } else {
+        setOtpDialogOpen(true);
+        setCurrentStep("otp");
+        toast.success("OTP Sent! You will receive an OTP shortly.");
+      }
+    } catch (error) {
+      toast.error("Failed to send OTP. Please try again.");
+      console.error("Error in handleLoginSubmit:", error);
+    }
+  };
+
+  const handleOtpSubmit = async () => {
+    try {
+      const response = await axiosInstance.post(
+        "/account/authorization/verify",
+        {
+          mobile: mobileNumber,
+          otp: otpCode,
+        }
+      );
+
+      const auth = response.data.data.authorization;
+
+      if (response.status === 200) {
+        localStorage.setItem("authorization", auth);
+        setOtpDialogOpen(false);
+        toast.success("OTP Verified!");
+        setIsLogin(true);
+        const activeServices = response.data.data.active_services;
+        if (activeServices.includes("BUSINESS-LISTING")) {
+          toast.success("Login Successful!");
+        }
+        handleSubmitReview();
+      } else {
+        toast.error("Failed to verify OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error in handleOtpSubmit:", error);
+    }
+  };
+
+  const handleGoBack = () => {
+    setCurrentStep("login");
+  };
 
   const fetchBusinessData = async () => {
     try {
@@ -102,13 +169,7 @@ const ViewGymListing = () => {
     try {
       const authData = localStorage.getItem("authorization");
       if (!authData) {
-        const confirmResult = await Swal.fire({
-          icon: "info",
-          title:
-            "You need to log in first! click on login Button you see on top Right Side",
-          text: "Login to submit a review.",
-          showCancelButton: true,
-        });
+        handleShow();
         return;
       }
 
@@ -246,7 +307,10 @@ const ViewGymListing = () => {
                         <div className="vrt-list-thumb">
                           <div className="vrt-list-thumb-figure">
                             <img
-                              src={"https://files.fggroup.in/" + businessData?.business_images?.[0]}
+                              src={
+                                "https://files.fggroup.in/" +
+                                businessData?.business_images?.[0]
+                              }
                               className="img-fluid"
                               alt=""
                             />
@@ -309,7 +373,13 @@ const ViewGymListing = () => {
                               <ul>
                                 {tags.map((tags, index) => (
                                   <li>
-                                    <a key={index} className="text-danger" href="javascript:void(0);">{tags}</a>
+                                    <a
+                                      key={index}
+                                      className="text-danger"
+                                      href="javascript:void(0);"
+                                    >
+                                      {tags}
+                                    </a>
                                   </li>
                                 ))}
                               </ul>
@@ -332,10 +402,17 @@ const ViewGymListing = () => {
                           <div className="_adv_features">
                             <ul>
                               <li>
-                                Amount<span>₹ {businessData.amount?.paid_amount}</span>
+                                Amount
+                                <span>
+                                  ₹ {businessData.amount?.paid_amount}
+                                </span>
                               </li>
                               <li>
-                                Discount<span>- ₹ {businessData.amount?.discount_amount || '0'}</span>
+                                Discount
+                                <span>
+                                  - ₹{" "}
+                                  {businessData.amount?.discount_amount || "0"}
+                                </span>
                               </li>
                             </ul>
                           </div>
@@ -345,7 +422,11 @@ const ViewGymListing = () => {
                             <span className="Goodup-boo-space-left">
                               Total Payment
                             </span>
-                            <h4 className="ft-bold theme-cl">₹ {businessData.amount?.paid_amount - businessData.amount?.discount_amount}</h4>
+                            <h4 className="ft-bold theme-cl">
+                              ₹{" "}
+                              {businessData.amount?.paid_amount -
+                                businessData.amount?.discount_amount}
+                            </h4>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12">
@@ -373,7 +454,7 @@ const ViewGymListing = () => {
                                             <a
                                               href={locationData.direction_link}
                                               className="text-dark"
-                                              style={{ fontSize: '16px' }}
+                                              style={{ fontSize: "16px" }}
                                             >
                                               <span className="hkio-oilp ft-bold">
                                                 {contact.value}
@@ -398,7 +479,10 @@ const ViewGymListing = () => {
                                   <h5 className="ft-bold fs-lg">Location</h5>
                                   <div className="list-map-capt">
                                     <div className="lio-pact mt-3">
-                                      <span className="hkio-oilp ft-bold" style={{ fontSize: '16px' }}>
+                                      <span
+                                        className="hkio-oilp ft-bold"
+                                        style={{ fontSize: "16px" }}
+                                      >
                                         {contactData.value}
                                       </span>
                                     </div>
@@ -421,13 +505,15 @@ const ViewGymListing = () => {
                                       <a
                                         href={locationData.direction_link}
                                         className="text-dark"
-                                        style={{ fontSize: '16px' }}
+                                        style={{ fontSize: "16px" }}
                                       >
                                         <span className="hkio-oilp ft-bold">
                                           {locationData.address_line_1},{" "}
                                           {locationData.address_line_2},{" "}
-                                          {locationData.landmark}, {locationData.city},{" "}
-                                          {locationData.state} - {locationData.pin_code}
+                                          {locationData.landmark},{" "}
+                                          {locationData.city},{" "}
+                                          {locationData.state} -{" "}
+                                          {locationData.pin_code}
                                         </span>
                                       </a>
                                     </div>
@@ -450,7 +536,10 @@ const ViewGymListing = () => {
                                       {contacts.map(
                                         (contact, index) =>
                                           contact.contact_type === "email" && (
-                                            <span className="hkio-oilp ft-bold" style={{ fontSize: '16px' }}>
+                                            <span
+                                              className="hkio-oilp ft-bold"
+                                              style={{ fontSize: "16px" }}
+                                            >
                                               {contact.value}
                                             </span>
                                           )
@@ -474,9 +563,7 @@ const ViewGymListing = () => {
                           About the Business
                         </h5>
                         <div className="d-block mt-3 text-start">
-                          <p>
-                            {businessData?.description}
-                          </p>
+                          <p>{businessData?.description}</p>
                         </div>
                       </div>
                     )}
@@ -522,7 +609,7 @@ const ViewGymListing = () => {
                                     <td>
                                       {day.timings.length > 0
                                         ? day.timings[0].from_time !==
-                                          "00:00" &&
+                                            "00:00" &&
                                           day.timings[0].to_time !== "00:00"
                                           ? `${day.timings[0].from_time} - ${day.timings[0].to_time}`
                                           : "Closed"
@@ -669,7 +756,10 @@ const ViewGymListing = () => {
                           {faqs.map((faq, index) => (
                             <div id="accordion2" className="accordion">
                               <div className="card">
-                                <div className="card-header" id={`heading-${index}`}>
+                                <div
+                                  className="card-header"
+                                  id={`heading-${index}`}
+                                >
                                   <h5 className="mb-0">
                                     <button
                                       className="btn btn-link"
@@ -688,9 +778,7 @@ const ViewGymListing = () => {
                                   aria-labelledby="h7"
                                   data-parent="#accordion2"
                                 >
-                                  <div className="card-body">
-                                    {faq.answer}
-                                  </div>
+                                  <div className="card-body">{faq.answer}</div>
                                 </div>
                               </div>
                             </div>
@@ -710,10 +798,14 @@ const ViewGymListing = () => {
                     <div className="_adv_features">
                       <ul>
                         <li>
-                          Amount<span>₹ {businessData.amount?.paid_amount}</span>
+                          Amount
+                          <span>₹ {businessData.amount?.paid_amount}</span>
                         </li>
                         <li>
-                          Discount<span>- ₹ {businessData.amount?.discount_amount || '0'}</span>
+                          Discount
+                          <span>
+                            - ₹ {businessData.amount?.discount_amount || "0"}
+                          </span>
                         </li>
                       </ul>
                     </div>
@@ -723,7 +815,11 @@ const ViewGymListing = () => {
                       <span className="Goodup-boo-space-left">
                         Total Payment
                       </span>
-                      <h4 className="ft-bold theme-cl">₹ {businessData.amount?.paid_amount - businessData.amount?.discount_amount}</h4>
+                      <h4 className="ft-bold theme-cl">
+                        ₹{" "}
+                        {businessData.amount?.paid_amount -
+                          businessData.amount?.discount_amount}
+                      </h4>
                     </div>
                   </div>
                   <div className="col-lg-12 col-md-12 col-sm-12">
@@ -751,7 +847,7 @@ const ViewGymListing = () => {
                                       <a
                                         href={locationData.direction_link}
                                         className="text-dark"
-                                        style={{ fontSize: '16px' }}
+                                        style={{ fontSize: "16px" }}
                                       >
                                         <span className="hkio-oilp ft-bold">
                                           {contact.value}
@@ -776,7 +872,10 @@ const ViewGymListing = () => {
                             <h5 className="ft-bold fs-lg">Location</h5>
                             <div className="list-map-capt">
                               <div className="lio-pact mt-3">
-                                <span className="hkio-oilp ft-bold" style={{ fontSize: '16px' }}>
+                                <span
+                                  className="hkio-oilp ft-bold"
+                                  style={{ fontSize: "16px" }}
+                                >
                                   {contactData.value}
                                 </span>
                               </div>
@@ -799,13 +898,14 @@ const ViewGymListing = () => {
                                 <a
                                   href={locationData.direction_link}
                                   className="text-dark"
-                                  style={{ fontSize: '16px' }}
+                                  style={{ fontSize: "16px" }}
                                 >
                                   <span className="hkio-oilp ft-bold">
                                     {locationData.address_line_1},{" "}
                                     {locationData.address_line_2},{" "}
-                                    {locationData.landmark}, {locationData.city},{" "}
-                                    {locationData.state} - {locationData.pin_code}
+                                    {locationData.landmark}, {locationData.city}
+                                    , {locationData.state} -{" "}
+                                    {locationData.pin_code}
                                   </span>
                                 </a>
                               </div>
@@ -828,7 +928,10 @@ const ViewGymListing = () => {
                                 {contacts.map(
                                   (contact, index) =>
                                     contact.contact_type === "email" && (
-                                      <span className="hkio-oilp ft-bold" style={{ fontSize: '16px' }}>
+                                      <span
+                                        className="hkio-oilp ft-bold"
+                                        style={{ fontSize: "16px" }}
+                                      >
                                         {contact.value}
                                       </span>
                                     )
@@ -846,6 +949,110 @@ const ViewGymListing = () => {
           </div>
         </section>
         <Footer />
+
+        <Modal
+          show={showModal && currentStep === "login"}
+          onHide={handleClose}
+          centered
+        >
+          <div class="modal-headers">
+            <button type="button" class="close" onClick={handleClose}>
+              <span class="ti-close"></span>
+            </button>
+          </div>
+          <Modal.Body className="p-5">
+            <a
+              className="nav-brand d-flex justify-content-center align-items-center"
+              href="#"
+            >
+              <img src="images/logo.png" className="logo" alt="" />
+            </a>
+            <h3 className="text-center">Welcome</h3>
+            <div class="text-center mb-5">
+              <h4 class="m-0 ft-medium">Login for a seamless experience</h4>
+            </div>
+            <Form>
+              <Form.Group controlId="mobile">
+                <Form.Label>Mobile Number</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Mobile Number*"
+                  className="rounded bg-light"
+                  onChange={(e) => setMobileNumber(e.target.value)}
+                />
+              </Form.Group>
+
+              <div className="text-center my-3">
+                <Button
+                  variant="primary"
+                  className="w-100 theme-bg text-light rounded ft-medium"
+                  onClick={handleLoginSubmit}
+                >
+                  Sign In
+                </Button>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
+
+        <Modal
+          show={otpDialogOpen && currentStep === "otp"}
+          onHide={() => setOtpDialogOpen(false)}
+          centered
+        >
+          <div class="modal-headers">
+            <button
+              type="button"
+              class="close"
+              onClick={() => setOtpDialogOpen(false)}
+            >
+              <span class="ti-close"></span>
+            </button>
+          </div>
+          <Modal.Body className="p-5">
+            <a
+              className="nav-brand d-flex justify-content-center align-items-center"
+              href="#"
+            >
+              <img src="images/logo.png" className="logo" alt="" />
+            </a>
+            <div class="text-center mb-4">
+              <h4 class="m-0 ft-medium">OTP Verification</h4>
+            </div>
+            <Form>
+              <Form.Group controlId="mobile">
+                <Form.Label>OTP</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter OTP*"
+                  className="rounded bg-light"
+                  value={otpCode}
+                  onChange={(e) => setOtpCode(e.target.value)}
+                />
+              </Form.Group>
+              <div className="text-center row justify-content-center mt-4 my-3">
+                <div className="col-5">
+                  <Button
+                    variant="primary"
+                    className="w-100 bg-dark text-light rounded ft-medium"
+                    onClick={handleGoBack}
+                  >
+                    Back
+                  </Button>
+                </div>
+                <div className="col-5">
+                  <Button
+                    variant="primary"
+                    className="w-100 theme-bg text-light rounded ft-medium"
+                    onClick={handleOtpSubmit}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
       </>
     </div>
   );
