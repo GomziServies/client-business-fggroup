@@ -32,16 +32,14 @@ const ViewGymListing = () => {
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
   const [userReviewsData, setUserReviewData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [allBusinessData, setAllBusinessData] = useState([]);
-  const images = [
-    "/images/revolutionizing-gyms-1.webp",
-    "/images/revolutionizing-gyms-2.webp",
-    "/images/revolutionizing-gyms-3.webp",
-    "/images/revolutionizing-gyms-4.webp",
-  ];
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
   const [showModal, setShowModal] = useState(false);
   const [mobileNumber, setMobileNumber] = useState("");
   const [otpDialogOpen, setOtpDialogOpen] = useState(false);
@@ -111,7 +109,6 @@ const ViewGymListing = () => {
 
   const fetchBusinessData = async () => {
     try {
-      setIsLoading(true);
       const requestData = {
         listing_id: [business_id],
       };
@@ -144,9 +141,9 @@ const ViewGymListing = () => {
       setContactData(fetchedLocationData.contact);
       // setReviewData(fetchedBusinessData.review_stats);
       // setListNumber(data.pagination.total);
-      setIsLoading(false);
+      // setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
+      // setIsLoading(false);
       console.error("Error in Getting Business Data:", error);
     }
   };
@@ -166,6 +163,7 @@ const ViewGymListing = () => {
   };
 
   const handleSubmitReview = async () => {
+    setIsLoading(true);
     try {
       const authData = localStorage.getItem("authorization");
       if (!authData) {
@@ -197,6 +195,7 @@ const ViewGymListing = () => {
       console.error("Error submitting review:", error);
       toast.error("Error submitting review. Please try again.");
     }
+    setIsLoading(false);
   };
 
   const handleRatingChange = (newRating) => {
@@ -219,19 +218,6 @@ const ViewGymListing = () => {
     fetchBusinessData();
     fetchReviewsData();
   }, []);
-
-  const CustomPrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={`${className} custom-prev`}
-        style={{ ...style }}
-        onClick={onClick}
-      >
-        &#8249;
-      </div>
-    );
-  };
 
   const settings = {
     infinite: true,
@@ -271,6 +257,13 @@ const ViewGymListing = () => {
         options={{ pageRef: true }}
       />
       <>
+        {loading && (
+          <div className="loader-background">
+            <div className="spinner-box">
+              <div className="three-quarter-spinner"></div>
+            </div>
+          </div>
+        )}
         <Header />
         <section
           className="view-gym-listing text-start"
@@ -387,7 +380,11 @@ const ViewGymListing = () => {
                           )}
                           <div className="vrt-list-desc">
                             <p className="vrt-qgunke">
-                              Listed by GOMZI: These gyms, fitness centers, and studios are handpicked to help you achieve your fitness goals. Explore their unique facilities, expert trainers, and personalized programs to find the perfect fit for your journey.
+                              Listed by GOMZI: These gyms, fitness centers, and
+                              studios are handpicked to help you achieve your
+                              fitness goals. Explore their unique facilities,
+                              expert trainers, and personalized programs to find
+                              the perfect fit for your journey.
                             </p>
                           </div>
                         </div>
@@ -608,7 +605,7 @@ const ViewGymListing = () => {
                                     <td>
                                       {day.timings.length > 0
                                         ? day.timings[0].from_time !==
-                                          "00:00" &&
+                                            "00:00" &&
                                           day.timings[0].to_time !== "00:00"
                                           ? `${day.timings[0].from_time} - ${day.timings[0].to_time}`
                                           : "Closed"
@@ -685,8 +682,16 @@ const ViewGymListing = () => {
                             </div>
                           </div>
                         ))}
-                        {userReviewsData?.length === 0 && (
+
+                        {userReviewsData.length === 0 && !setLoading && (
                           <h5>No Review Found</h5>
+                        )}
+                        {isLoading && (
+                          <div className="w-100 d-flex justify-content-center">
+                            <div class="spinner-box spinner-width">
+                              <div class="three-quarter-spinner three-quarter-spinner-width"></div>
+                            </div>
+                          </div>
                         )}
                       </div>
                     </div>

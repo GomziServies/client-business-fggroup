@@ -36,8 +36,11 @@ const AllGymListing = () => {
   };
 
   const [businessData, setBusinessData] = useState([]);
+    const [loadingOne, setLoadingOne] = useState(false);
 
   const fetchBusinessData = async () => {
+    setLoadingOne(true);
+
     try {
       const requestData = {
         filter: {
@@ -60,6 +63,7 @@ const AllGymListing = () => {
     } catch (error) {
       console.error("Error in Getting Business Data:", error);
     }
+    setLoadingOne(false);
   };
 
   useEffect(() => {
@@ -89,7 +93,13 @@ const AllGymListing = () => {
         options={{ pageRef: true }}
       />
       <>
-        {loading && <div className="preloader" />}
+      {loading && (
+          <div className="loader-background">
+            <div className="spinner-box">
+              <div className="three-quarter-spinner"></div>
+            </div>
+          </div>
+        )}
         <div id="main-wrapper">
           <Header />
           <div className="clearfix" />
@@ -381,6 +391,18 @@ const AllGymListing = () => {
                       </div>
                     );
                   })}
+                  {businessData.length === 0 && !loadingOne && (
+                            <div className="w-100 d-flex justify-content-center">
+                                <h4>No Data Found</h4>
+                            </div>
+                        )}
+                        {loadingOne && (
+                            <div className="w-100 d-flex justify-content-center">
+                                <div class="spinner-box">
+                                    <div class="three-quarter-spinner"></div>
+                                </div>
+                            </div>
+                        )}
                 </div>
               </div>
             </div>

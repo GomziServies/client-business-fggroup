@@ -1,10 +1,10 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
 import "../assets/css/style.css";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-import Typography from "@mui/material/Typography";
 import axiosInstance from "../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingOne, setLoadingOne] = useState(false);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -78,6 +79,7 @@ const Profile = () => {
   };
 
   const handlePhotoChange = async (e) => {
+    setLoadingOne(true);
     const file = e.target.files[0];
 
     const formDataForUpload = new FormData();
@@ -105,27 +107,29 @@ const Profile = () => {
       console.error("Error uploading photo:", error);
       toast.error("Error uploading profile photo");
     }
+    setLoadingOne(false);
   };
 
-  const handleRemovePhoto = async () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      profilePhoto: null,
-      profile_image: null,
-    }));
+  // const handleRemovePhoto = async () => {
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     profilePhoto: null,
+  //     profile_image: null,
+  //   }));
 
-    try {
-      await axiosInstance.post("/account/update-profile", {
-        profile_image: null,
-      });
-      toast.success("Profile photo removed successfully");
-    } catch (error) {
-      console.error("Error removing photo:", error);
-      toast.error("Error removing profile photo");
-    }
-  };
+  //   try {
+  //     await axiosInstance.post("/account/update-profile", {
+  //       profile_image: null,
+  //     });
+  //     toast.success("Profile photo removed successfully");
+  //   } catch (error) {
+  //     console.error("Error removing photo:", error);
+  //     toast.error("Error removing profile photo");
+  //   }
+  // };
 
   const updateData = async () => {
+    setIsLoading(true);
     try {
       const response = await axiosInstance.post(
         "/account/update-profile",
@@ -142,6 +146,7 @@ const Profile = () => {
       console.error("Error updating user data:", error);
       toast.error("Error updating user data");
     }
+    setIsLoading(false);
   };
 
   const handleSubmit = async (event) => {
@@ -149,17 +154,17 @@ const Profile = () => {
     await updateData();
   };
 
-  const breadcrumbs = [
-    <Link underline="hover" key="1" color="inherit" href="/">
-      Home
-    </Link>,
-    <Link underline="hover" key="2" color="inherit">
-      User Option
-    </Link>,
-    <Typography key="3" color="text.primary">
-      Profile
-    </Typography>,
-  ];
+  // const breadcrumbs = [
+  //   <Link underline="hover" key="1" color="inherit" href="/">
+  //     Home
+  //   </Link>,
+  //   <Link underline="hover" key="2" color="inherit">
+  //     User Option
+  //   </Link>,
+  //   <Typography key="3" color="text.primary">
+  //     Profile
+  //   </Typography>,
+  // ];
 
   const handleLogout = async () => {
     try {
@@ -187,8 +192,13 @@ const Profile = () => {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>User Profile Page - Manage Your Account & Personal Information</title>
-        <meta name="description" content="Access your profile to update personal information, manage account settings, and customize your preferences for a seamless user experience." />
+        <title>
+          User Profile Page - Manage Your Account & Personal Information
+        </title>
+        <meta
+          name="description"
+          content="Access your profile to update personal information, manage account settings, and customize your preferences for a seamless user experience."
+        />
         <link
           rel="shortcut icon"
           type="image/x-icon"
@@ -197,7 +207,13 @@ const Profile = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {loading && <div className="preloader" />}
+        {loading && (
+          <div className="loader-background">
+            <div className="spinner-box">
+              <div className="three-quarter-spinner"></div>
+            </div>
+          </div>
+        )}
         <div id="main-wrapper">
           <Header />
           <div className="clearfix" />
@@ -291,6 +307,7 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
+
               {isLogin ? (
                 <div className="dashboard-widg-bar d-block">
                   <div className="row">
@@ -302,7 +319,7 @@ const Profile = () => {
                         <div>
                           <div className="d-flex rounded px-3 py-3 mb-3">
                             <div className="dash-figure">
-                              <div className="dash-figure-thumb">
+                              <div className="dash-figure-thumb position-relative">
                                 <img
                                   src={formData.profilePhoto}
                                   className="img-fluid rounded"
@@ -311,7 +328,15 @@ const Profile = () => {
                                     e.target.src = User_img;
                                   }}
                                 />
+                                {loadingOne && (
+                                  <div className="w-100 d-flex justify-content-center position-absolute">
+                                    <div class="spinner-box spinner-width">
+                                      <div class="three-quarter-spinner three-quarter-spinner-width"></div>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
+
                               <input
                                 accept="image/*"
                                 style={{ display: "none" }}
@@ -496,7 +521,8 @@ const Profile = () => {
                     <div className="col-12 d-flex flex-column align-items-center">
                       <h4>You have Log in first.</h4>
                       <Link to="/login" class="add-list-btn mt-3">
-                        <i className="lni lni-power-switch me-2" />Log In
+                        <i className="lni lni-power-switch me-2" />
+                        Log In
                       </Link>
                     </div>
                   </div>
@@ -516,6 +542,14 @@ const Profile = () => {
         </div>
       </>
       <ToastContainer />
+
+      {isLoading && (
+        <div className="loader-background">
+          <div className="spinner-box">
+            <div className="three-quarter-spinner"></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

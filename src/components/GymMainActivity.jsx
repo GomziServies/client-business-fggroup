@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 
 const GymMainActivity = ({ searchData }) => {
     const [businessData, setBusinessData] = useState([]);
+    const [loadingOne, setLoadingOne] = useState(false);
 
     const fetchBusinessData = async () => {
+        setLoadingOne(true);
         try {
             const requestData = {
                 filter: {
@@ -40,6 +42,7 @@ const GymMainActivity = ({ searchData }) => {
         } catch (error) {
             console.error("Error in Getting Business Data:", error);
         }
+        setLoadingOne(false);
     };
 
     useEffect(() => {
@@ -220,7 +223,8 @@ const GymMainActivity = ({ searchData }) => {
                                                         >
                                                             {business.business_name &&
                                                                 business.business_name.length > 30
-                                                                ? business.business_name.substring(0, 30) + "..."
+                                                                ? business.business_name.substring(0, 30) +
+                                                                "..."
                                                                 : business.business_name}
 
                                                             <span className="verified-badge">
@@ -230,14 +234,18 @@ const GymMainActivity = ({ searchData }) => {
                                                     </h4>
                                                     <div className="Goodup-ft-first mt-2">
                                                         <div className="Goodup-rating">
-                                                            <div className="Goodup-rates" style={{ fontSize: '15px' }}>
+                                                            <div
+                                                                className="Goodup-rates"
+                                                                style={{ fontSize: "15px" }}
+                                                            >
                                                                 {[...Array(5)].map((_, index) => (
                                                                     <i
                                                                         className="fas fa-star"
                                                                         key={index}
                                                                         style={{
                                                                             color:
-                                                                                index < business.review_stats.average_rating
+                                                                                index <
+                                                                                    business.review_stats.average_rating
                                                                                     ? "#F09000"
                                                                                     : "#ccc",
                                                                         }}
@@ -246,12 +254,16 @@ const GymMainActivity = ({ searchData }) => {
                                                             </div>
                                                         </div>
                                                         <div className="Goodup-price-range">
-                                                            <span className="small ft-bold">{business.review_stats.total_ratings} Rating</span>
+                                                            <span className="small ft-bold">
+                                                                {business.review_stats.total_ratings} Rating
+                                                            </span>
                                                         </div>
                                                     </div>
                                                     <div className="vrt-list-features mt-2 mb-2">
                                                         <ul>
-                                                            <li><a href="javascript:void(0);">Gym</a></li>
+                                                            <li>
+                                                                <a href="javascript:void(0);">Gym</a>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                     <div className="vrt-list-desc mt-3 mb-3">
@@ -260,7 +272,10 @@ const GymMainActivity = ({ searchData }) => {
 
                                                     <div className="vrt-list-amenties">
                                                         <div className="Goodup-facilities-wrap mb-0">
-                                                            <div className="Goodup-facility-title mr-3" style={{ fontSize: '17px' }}>
+                                                            <div
+                                                                className="Goodup-facility-title mr-3"
+                                                                style={{ fontSize: "17px" }}
+                                                            >
                                                                 Facilities :
                                                             </div>
                                                             <div className="Goodup-facility-list">
@@ -297,6 +312,18 @@ const GymMainActivity = ({ searchData }) => {
                                 </>
                             );
                         })}
+                        {businessData.length === 0 && !loadingOne && (
+                            <div className="w-100 d-flex justify-content-center">
+                                <h4>No Data Found</h4>
+                            </div>
+                        )}
+                        {loadingOne && (
+                            <div className="w-100 d-flex justify-content-center">
+                                <div class="spinner-box">
+                                    <div class="three-quarter-spinner"></div>
+                                </div>
+                            </div>
+                        )}
                         <div className="col-12 d-flex justify-content-center mt-3">
                             <Link to="/all-gym-listing" class="view-list-btn me-2">
                                 <i class="fas fa-eye me-2"></i>View More

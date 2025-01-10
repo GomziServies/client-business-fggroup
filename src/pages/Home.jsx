@@ -11,8 +11,8 @@ import GymMainActivity from "../components/GymMainActivity";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
-  const [searchData, setSearchData] = useState('');
-  const [inputData, setInputData] = useState('');
+  const [searchData, setSearchData] = useState("");
+  const [inputData, setInputData] = useState("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,9 +31,9 @@ const Home = () => {
   };
 
   const handleInputchange = (event) => {
-    const value = event.target.value
-    setInputData(value)
-  }
+    const value = event.target.value;
+    setInputData(value);
+  };
 
   return (
     <div>
@@ -58,7 +58,13 @@ const Home = () => {
         options={{ pageRef: true }}
       />
       <>
-        {loading && <div className="preloader" />}
+        {loading && (
+          <div className="loader-background">
+            <div className="spinner-box">
+              <div className="three-quarter-spinner"></div>
+            </div>
+          </div>
+        )}
         <div id="main-wrapper">
           <Header />
           <div className="clearfix" />
@@ -516,7 +522,7 @@ const Home = () => {
                             className="checkbox-custom"
                             name="dd"
                             type="checkbox"
-                          // defaultChecked=""
+                            // defaultChecked=""
                           />
                           <label htmlFor="dd" className="checkbox-custom-label">
                             Remember Me
