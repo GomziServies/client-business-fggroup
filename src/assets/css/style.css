@@ -10662,3 +10662,8 @@ footer.skin-dark-footer ul.footer-bottom-social li a:focus {
     transform: rotate(359deg);
   }
 }
+
+.page-form-section{
+  margin-top: 70px;
+  padding: 50px 0px;
+}

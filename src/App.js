@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import ScrollRestoration from "./components/ScrollRestoration";
 import ViewGymListing from "./pages/view-gym-listing";
 import AllGymListing from "./pages/all-gym-listing";
+import BuyFormComponent from "./pages/page-form";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/all-gym-listing" element={<AllGymListing />} />
         <Route path="/gym-listing-view" element={<ViewGymListing />} />
+        <Route path="/page-form" element={<BuyFormComponent />} />
       </Routes>
       <ScrollRestoration />
     </div>
