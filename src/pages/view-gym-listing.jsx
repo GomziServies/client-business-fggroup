@@ -835,7 +835,7 @@ const ViewGymListing = () => {
                     </a>
                   </div>
                 </div>
-                <div className="bg-white rounded mb-4">
+                {/* <div className="bg-white rounded mb-4">
                   <div className="jbd-01 px-4 py-4">
                     <div className="jbd-details mb-4">
                       <div className="Goodup-lot-wrap d-block">
@@ -867,8 +867,8 @@ const ViewGymListing = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="bg-white rounded mb-4">
+                </div> */}
+                {/* <div className="bg-white rounded mb-4">
                   <div className="jbd-01 px-4 py-4">
                     <div className="jbd-details mb-4">
                       <div className="Goodup-lot-wrap d-block">
@@ -890,7 +890,7 @@ const ViewGymListing = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="bg-white rounded mb-4">
                   <div className="jbd-01 px-4 py-4">
                     <div className="jbd-details mb-4">
@@ -921,7 +921,7 @@ const ViewGymListing = () => {
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded mb-4">
+                {/* <div className="bg-white rounded mb-4">
                   <div className="jbd-01 px-4 py-4">
                     <div className="jbd-details mb-4">
                       <div className="Goodup-lot-wrap d-block">
@@ -948,7 +948,7 @@ const ViewGymListing = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
