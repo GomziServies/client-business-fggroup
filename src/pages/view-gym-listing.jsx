@@ -466,21 +466,25 @@ const ViewGymListing = () => {
                           </div>
                         </div>
                       </div> */}
-                      {/* <div className="bg-white rounded d-md-none d-block">
+                      <div className="bg-white rounded d-md-none d-block">
                         <div className="jbd-01 px-4 py-2">
                           <div className="jbd-details mb-2">
                             <div className="Goodup-lot-wrap d-block">
                               <div className="row g-4">
                                 <div className="col-12">
-                                  <h5 className="ft-bold fs-lg">Location</h5>
+                                  <h5 className="ft-bold fs-lg">Contact</h5>
                                   <div className="list-map-capt">
                                     <div className="lio-pact mt-3">
-                                      <span
+                                      <a
+                                        href={`tel:${contactData.value}`}
                                         className="hkio-oilp ft-bold"
-                                        style={{ fontSize: "16px" }}
+                                        style={{
+                                          fontSize: "16px",
+                                          textDecoration: "none",
+                                        }}
                                       >
                                         {contactData.value}
-                                      </span>
+                                      </a>
                                     </div>
                                   </div>
                                 </div>
@@ -488,7 +492,8 @@ const ViewGymListing = () => {
                             </div>
                           </div>
                         </div>
-                      </div> */}
+                      </div>
+
                       <div className="bg-white rounded d-md-none d-block">
                         <div className="jbd-01 px-4 py-2">
                           <div className="jbd-details mb-2">
@@ -869,21 +874,31 @@ const ViewGymListing = () => {
                     </div>
                   </div>
                 </div> */}
-                {/* <div className="bg-white rounded mb-4">
+                <div className="bg-white rounded mb-4">
                   <div className="jbd-01 px-4 py-4">
                     <div className="jbd-details mb-4">
                       <div className="Goodup-lot-wrap d-block">
                         <div className="row g-4">
                           <div className="col-12">
-                            <h5 className="ft-bold fs-lg">Location</h5>
+                            <h5 className="ft-bold fs-lg">Contact</h5>
                             <div className="list-map-capt">
                               <div className="lio-pact mt-3">
-                                <span
+                                <a
+                                  href={`tel:${contactData.value}`}
+                                  className="hkio-oilp ft-bold"
+                                  style={{
+                                    fontSize: "16px",
+                                    textDecoration: "none",
+                                  }}
+                                >
+                                  {contactData.value}
+                                </a>
+                                {/* <span
                                   className="hkio-oilp ft-bold"
                                   style={{ fontSize: "16px" }}
                                 >
                                   {contactData.value}
-                                </span>
+                                </span> */}
                               </div>
                             </div>
                           </div>
@@ -891,7 +906,7 @@ const ViewGymListing = () => {
                       </div>
                     </div>
                   </div>
-                </div> */}
+                </div>
                 <div className="bg-white rounded mb-4">
                   <div className="jbd-01 px-4 py-4">
                     <div className="jbd-details mb-4">
