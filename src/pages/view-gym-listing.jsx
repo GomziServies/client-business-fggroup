@@ -433,7 +433,7 @@ const ViewGymListing = () => {
                           </a>
                         </div>
                       </div>
-                      <div className="bg-white rounded d-md-none d-block">
+                      {/* <div className="bg-white rounded d-md-none d-block">
                         <div className="jbd-01 px-4 py-2">
                           <div className="jbd-details mb-2">
                             <div className="Goodup-lot-wrap d-block">
@@ -465,8 +465,8 @@ const ViewGymListing = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="bg-white rounded d-md-none d-block">
+                      </div> */}
+                      {/* <div className="bg-white rounded d-md-none d-block">
                         <div className="jbd-01 px-4 py-2">
                           <div className="jbd-details mb-2">
                             <div className="Goodup-lot-wrap d-block">
@@ -488,7 +488,7 @@ const ViewGymListing = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="bg-white rounded d-md-none d-block">
                         <div className="jbd-01 px-4 py-2">
                           <div className="jbd-details mb-2">
@@ -520,7 +520,7 @@ const ViewGymListing = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="bg-white rounded d-md-none d-block">
+                      {/* <div className="bg-white rounded d-md-none d-block">
                         <div className="jbd-01 px-4 py-2">
                           <div className="jbd-details mb-4">
                             <div className="Goodup-lot-wrap d-block">
@@ -547,7 +547,7 @@ const ViewGymListing = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -615,6 +615,102 @@ const ViewGymListing = () => {
                                 ))}
                               </tbody>
                             </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="d-block mb-2">
+                  {faqs.length > 0 && (
+                    <div className="jbd-01 py-2">
+                      <div className="jbd-details">
+                        <h5 className="ft-bold fs-lg">
+                          Frequently Asked Questions
+                        </h5>
+                        <div className="d-block mt-3">
+                          {faqs.map((faq, index) => (
+                            <div id="accordion2" className="accordion">
+                              <div className="card">
+                                <div
+                                  className="card-header"
+                                  id={`heading-${index}`}
+                                >
+                                  <h5 className="mb-0">
+                                    <button
+                                      className="btn btn-link"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#ord7"
+                                      aria-expanded="true"
+                                      aria-controls="ord7"
+                                    >
+                                      {index + 1}. {faq.question}
+                                    </button>
+                                  </h5>
+                                </div>
+                                <div
+                                  id="ord7"
+                                  className="collapse show"
+                                  aria-labelledby="h7"
+                                  data-parent="#accordion2"
+                                >
+                                  <div className="card-body">{faq.answer}</div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="bg-white rounded mb-4">
+                  <div className="jbd-01 px-4 py-4">
+                    <div className="jbd-details">
+                      <h5 className="ft-bold fs-lg">Drop Your Review</h5>
+                      <div className="review-form-box form-submit mt-3">
+                        <div className="row">
+                          <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="form-group mb-3">
+                              <textarea
+                                className="form-control rounded ht-140"
+                                placeholder="Review"
+                                defaultValue={""}
+                                value={review}
+                                onChange={(e) => setReview(e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="form-group mb-3">
+                              <label className="ft-medium small mb-1">
+                                Select Rating
+                              </label>
+                              <div className="d-flex mb-2">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <StarIcon
+                                    key={star}
+                                    sx={{
+                                      fontSize: "25px",
+                                      color:
+                                        rating >= star ? "#FFAE11" : "#000",
+                                    }}
+                                    onClick={() => handleRatingChange(star)}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="form-group">
+                              <button
+                                onClick={handleSubmitReview}
+                                className="btn theme-bg text-light rounded"
+                              >
+                                Submit Review
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -696,101 +792,6 @@ const ViewGymListing = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="bg-white rounded mb-4">
-                  <div className="jbd-01 px-4 py-4">
-                    <div className="jbd-details">
-                      <h5 className="ft-bold fs-lg">Drop Your Review</h5>
-                      <div className="review-form-box form-submit mt-3">
-                        <div className="row">
-                          <div className="col-lg-12 col-md-12 col-sm-12">
-                            <div className="form-group mb-3">
-                              <textarea
-                                className="form-control rounded ht-140"
-                                placeholder="Review"
-                                defaultValue={""}
-                                value={review}
-                                onChange={(e) => setReview(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-lg-12 col-md-12 col-sm-12">
-                            <div className="form-group mb-3">
-                              <label className="ft-medium small mb-1">
-                                Select Rating
-                              </label>
-                              <div className="d-flex mb-2">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                  <StarIcon
-                                    key={star}
-                                    sx={{
-                                      fontSize: "25px",
-                                      color:
-                                        rating >= star ? "#FFAE11" : "#000",
-                                    }}
-                                    onClick={() => handleRatingChange(star)}
-                                  />
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-lg-12 col-md-12 col-sm-12">
-                            <div className="form-group">
-                              <button
-                                onClick={handleSubmitReview}
-                                className="btn theme-bg text-light rounded"
-                              >
-                                Submit Review
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-block mb-2">
-                  {faqs.length > 0 && (
-                    <div className="jbd-01 py-2">
-                      <div className="jbd-details">
-                        <h5 className="ft-bold fs-lg">
-                          Frequently Asked Questions
-                        </h5>
-                        <div className="d-block mt-3">
-                          {faqs.map((faq, index) => (
-                            <div id="accordion2" className="accordion">
-                              <div className="card">
-                                <div
-                                  className="card-header"
-                                  id={`heading-${index}`}
-                                >
-                                  <h5 className="mb-0">
-                                    <button
-                                      className="btn btn-link"
-                                      data-bs-toggle="collapse"
-                                      data-bs-target="#ord7"
-                                      aria-expanded="true"
-                                      aria-controls="ord7"
-                                    >
-                                      {index + 1}. {faq.question}
-                                    </button>
-                                  </h5>
-                                </div>
-                                <div
-                                  id="ord7"
-                                  className="collapse show"
-                                  aria-labelledby="h7"
-                                  data-parent="#accordion2"
-                                >
-                                  <div className="card-body">{faq.answer}</div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
               <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 price-section d-md-block d-none">
