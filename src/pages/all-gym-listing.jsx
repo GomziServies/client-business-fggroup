@@ -43,13 +43,6 @@ const AllGymListing = () => {
 
     try {
       const requestData = {
-        filter: {
-          business_type: ["personal", "business"],
-        },
-        sort: {
-          business_name: "desc",
-          rating: "desc",
-        },
         page: 1,
         limit: 6,
       };
@@ -58,7 +51,20 @@ const AllGymListing = () => {
         "/get-businesses",
         requestData
       );
-      const fetchedBusinessData = response.data.data;
+      let fetchedBusinessData = response.data.data;
+
+      fetchedBusinessData = fetchedBusinessData.filter(
+        (business) =>
+          business.review_stats?.total_ratings !== undefined &&
+          business.review_stats.total_ratings >= 0
+      );
+
+      fetchedBusinessData.sort(
+        (a, b) =>  b.review_stats.total_ratings - a.review_stats.total_ratings
+      );
+
+      console.log("Sorted fetchedBusinessData:", fetchedBusinessData);
+
       setBusinessData(fetchedBusinessData);
     } catch (error) {
       console.error("Error in Getting Business Data:", error);
