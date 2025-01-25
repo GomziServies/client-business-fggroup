@@ -42,10 +42,7 @@ const AllGymListing = () => {
     setLoadingOne(true);
 
     try {
-      const requestData = {
-        page: 1,
-        limit: 6,
-      };
+      const requestData = {};
 
       const response = await businessListingAxiosInstance.post(
         "/get-businesses",
